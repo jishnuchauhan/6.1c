@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DIRECTORY_PATH = '/path/to/your/code'
+        DIRECTORY_PATH = "${env.WORKSPACE}"
         TESTING_ENVIRONMENT = 'staging'
-        PRODUCTION_ENVIRONMENT = 'YourName-Production'
+        PRODUCTION_ENVIRONMENT = 'Jishnu'
     }
 
     stages {
@@ -65,7 +65,7 @@ pipeline {
             emailext (
                 subject: "Jenkins Build Success: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
                 body: "Build succeeded! Check the logs for details.",
-                to: 'developer@example.com',
+                to: 'anushka7k@gmail.com',
                 attachLog: true
             )
         }
@@ -73,7 +73,7 @@ pipeline {
             emailext (
                 subject: "Jenkins Build Failure: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
                 body: "Build failed. Check the logs for more details.",
-                to: 'developer@example.com',
+                to: 'anushka7k@gmail.com',
                 attachLog: true
             )
         }
