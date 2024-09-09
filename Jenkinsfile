@@ -22,6 +22,14 @@ pipeline {
                 echo "Running integration tests using TestNG"
                 // Commands for running tests, e.g., `sh 'mvn test'`
             }
+
+            post{
+                success{
+                    mail to: "anushka7k@gmail.com",
+                    subject: "Test status email",
+                    body: "Test passed"
+                }
+            }
         }
 
         stage('Code Analysis') {
@@ -35,6 +43,14 @@ pipeline {
             steps {
                 echo "Performing a security scan using OWASP ZAP"
                 // Command to run security scan, e.g., `sh 'zap-cli start'`
+            }
+
+            post{
+                success{
+                    mail to: "anushka7k@gmail.com",
+                    subject: "security scan stage ${currentBuild.result}",
+                    body: "Security scan stage completed"
+                }
             }
         }
 
@@ -57,25 +73,6 @@ pipeline {
                 echo "Deploying the application to the ${env.PRODUCTION_ENVIRONMENT} environment"
                 // Command to deploy to production, e.g., `sh 'aws deploy ...'`
             }
-        }
-    }
-
-    post {
-        success {
-            emailext (
-                subject: "Jenkins Build Success: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
-                body: "Build succeeded! Check the logs for details.",
-                to: 'jishnu.divit@gmail.com',
-                attachLog: true
-            )
-        }
-        failure {
-            emailext (
-                subject: "Jenkins Build Failure: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
-                body: "Build failed.",
-                to: 'jishnu.divit@gmail.com',
-                attachLog: true
-            )
         }
     }
 }
