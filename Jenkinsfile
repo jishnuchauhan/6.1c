@@ -62,7 +62,7 @@ pipeline {
                         attachLog: true
                     )
                 }
-                
+
                 failure {
                     emailext (
                         mail to: "jishnu.divit@gmail.com",
