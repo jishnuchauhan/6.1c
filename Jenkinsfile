@@ -23,9 +23,21 @@ pipeline {
 
             post{
                 success{
-                    mail to: "jishnu.divit@gmail.com",
-                    subject: "Test status email",
-                    body: "Test passed"
+                    emailext(
+                        mail to: "jishnu.divit@gmail.com",
+                        subject: "Unit and Integration Tests Passed: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                        body: "Unit and integration tests have passed.",
+                        attachLog: true
+                    )
+                }
+
+                failure {
+                    emailext (
+                        mail to: "jishnu.divit@gmail.com",
+                        subject: "Unit and Integration Tests Failed: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                        body: "Unit and integration tests have failed. Check the logs for more details.",
+                        attachLog: true
+                    )
                 }
             }
         }
@@ -42,10 +54,22 @@ pipeline {
             }
 
             post{
-                success{
-                    mail to: "jishnu.divit@gmail.com",
-                    subject: "security scan stage ${currentBuild.result}",
-                    body: "Security scan stage completed"
+                success {
+                    emailext (
+                        mail to: "jishnu.divit@gmail.com",
+                        subject: "Security Scan Completed: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                        body: "Security scan stage completed successfully.",
+                        attachLog: true
+                    )
+                }
+                
+                failure {
+                    emailext (
+                        mail to: "jishnu.divit@gmail.com",
+                        subject: "Security Scan Failed: ${env.JOB_NAME} ${env.BUILD_NUMBER}",
+                        body: "Security scan stage failed. Check the logs for details.",
+                        attachLog: true
+                    )
                 }
             }
         }
