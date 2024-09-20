@@ -50,7 +50,7 @@ pipeline {
 
         stage('Security Scan') {
             steps {
-                echo "Performing a security scan using OWASP ZAP"s
+                echo "Performing a security scan using OWASP ZAP"
             }
 
             post{
@@ -76,7 +76,7 @@ pipeline {
 
         stage('Deploy to Staging') {
             steps {
-                echo "Deploying the application to ${env.TESTING_ENVIRONMENT} environment"s
+                echo "Deploying the application to ${env.TESTING_ENVIRONMENT} environment"
             }
         }
 
